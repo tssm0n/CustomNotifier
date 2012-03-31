@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello" />
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:stretchColumns="1"
+        android:layout_weight="0.50" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false" >        
+        
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_span="2"
+        android:text="Source URL:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+  
+    </TableRow>    
+    
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false" >
+
+            <EditText
+                android:id="@+id/editTextUrl"
+                android:layout_width="match_parent"
+            android:layout_span="2"                
+                android:layout_height="wrap_content" >
+
+                <requestFocus />
+            </EditText>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:text="Interval:"
+                android:layout_weight="0.40"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Spinner
+                android:id="@+id/spinnerInterval"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.60"
+                android:layout_span="1"
+                android:prompt="@string/interval_prompt"
+                 />
+
+        </TableRow>
+
+ 
+
+                <TableRow
+            android:id="@+id/tableRow5"
+               android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false" >       
+
+
+                    <Button
+                        android:id="@+id/saveButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SaveButton" />
+
+        </TableRow>                
+
+        <TableRow
+            android:id="@+id/tableRow6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false" >        
+        
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_span="2"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+   </TableRow>    
+                  
+                
+       <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false" >        
+        
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_span="1"
+        android:text="Notification Service Status:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+        android:id="@+id/textViewStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_span="2"
+        android:text="   Unknown"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+  
+    </TableRow>  
+                
+               <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+
+                    <Button
+                        android:id="@+id/stopButton"
+                        android:layout_width="0px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.50"
+                        android:text="@string/StopButton" />
+
+                    <Button
+                        android:id="@+id/startButton"
+                        android:layout_width="0px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.50"
+                        android:text="@string/StartButton" />
+
+        </TableRow>
+
+
+                
+    </TableLayout>
+
+</LinearLayout>

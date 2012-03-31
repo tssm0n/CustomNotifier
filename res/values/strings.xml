@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Settings&#8230;</string>
+    <string name="app_name">Custom Notifier</string>
+    <string name="StartButton">Start</string>
+    <string name="StopButton">Stop</string>
+    <string name="SaveButton">Save Settings</string>
+    
+    <string name="interval_prompt">Pick an interval</string>
+ 
+</resources>
