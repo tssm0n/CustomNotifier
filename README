@@ -1,0 +1,4 @@
+CustomNofier will read an XML file containing notices and alerts at a specified interval and display those messages as notifications on an Android device.
+
+To use, configure the application with the URL of an XML file that follows the notifications.xsd schema and select an interval.  When the XML file is updated on the server, the Android device will pick up any new notifications and display them to the user.
+
