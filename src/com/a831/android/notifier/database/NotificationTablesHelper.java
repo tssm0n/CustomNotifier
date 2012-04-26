@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class NotificationTablesHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "notify.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     private static final String TAG = "ContentProvider";	
     
@@ -61,9 +61,17 @@ public class NotificationTablesHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
                 + newVersion + ", which will destroy all old data");
-        db.execSQL("DROP TABLE IF EXISTS " + NotifierDatabaseConstants.PARAMETERS_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + NotifierDatabaseConstants.MESSAGES_TABLE);
-        onCreate(db);
+        if(oldVersion == 5 && newVersion == 6){
+			ContentValues values = new ContentValues();
+			values.put(NotifierDatabaseConstants._ID, NotifierDatabaseConstants.LAST_FIRE_ID);
+			values.put(NotifierDatabaseConstants.VALUE_COLUMN, "01/01/2012 00:00");
+			db.insert(NotifierDatabaseConstants.PARAMETERS_TABLE, null, values);
+        } else {
+        	db.execSQL("DROP TABLE IF EXISTS " + NotifierDatabaseConstants.PARAMETERS_TABLE);
+        	db.execSQL("DROP TABLE IF EXISTS " + NotifierDatabaseConstants.MESSAGES_TABLE);
+        	onCreate(db);
+        }
+       
 
 
 	}

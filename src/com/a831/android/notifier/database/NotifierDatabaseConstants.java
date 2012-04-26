@@ -19,6 +19,7 @@ public class NotifierDatabaseConstants implements BaseColumns{
 	public static final int URL_ID = 1;
 	public static final int INTERVAL_ID = 2;
 	public static final int PROCESS_ID = 3;
+	public static final int LAST_FIRE_ID = 4;
 	
 	public enum Statuses { STOPPED, RUNNING };
 

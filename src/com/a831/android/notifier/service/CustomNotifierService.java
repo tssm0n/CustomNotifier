@@ -4,6 +4,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +23,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.a831.android.notifier.CustomNotifierActivity;
+import com.a831.android.notifier.NoticeDetailsActivity;
 import com.a831.android.notifier.NotifierConstants;
 import com.a831.android.notifier.NotifyEvent;
 import com.a831.android.notifier.NotifyEvent.SeverityType;
@@ -35,6 +36,8 @@ import com.a831.android.notifier.xml.NotificationFeedParser;
 public class CustomNotifierService extends Service {
 
 	private static final String TAG = "CustomNotifierService";
+	
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy HH:mm" );
 	
 	private NotifierDAO notifierDAO = null;
 	
@@ -205,6 +208,8 @@ public class CustomNotifierService extends Service {
 			}
 		}
 		
+		notifierDAO.updateSetting(DATE_FORMAT.format(new Date()), NotifierDatabaseConstants.LAST_FIRE_ID);
+		
 	}
 	
 	private String findSourceUrl(){
@@ -245,9 +250,10 @@ public class CustomNotifierService extends Service {
 		Context context = getApplicationContext();
 		CharSequence contentTitle = notice.getTitle();
 		CharSequence contentText = notice.getBody();
-		Intent notificationIntent = new Intent(this, CustomNotifierActivity.class);
+		Intent notificationIntent = new Intent(this, NoticeDetailsActivity.class);
 		notificationIntent.putExtra(NotifierConstants.NOTIFICATION_ID,  notice.getId());
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+		notificationIntent.putExtra(NotifierConstants.NOTIFICATION_TEXT,  notice.getBody());
+		PendingIntent contentIntent = PendingIntent.getActivity(this, notice.getId(), notificationIntent, 0);
 
 		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
 		notification.defaults = Notification.DEFAULT_ALL;

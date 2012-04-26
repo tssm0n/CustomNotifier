@@ -1,5 +1,11 @@
 package com.a831.android.notifier;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +28,8 @@ public class CustomNotifierActivity extends Activity {
 	
 	private static final String TAG = "CustomNotifierActivity";
 	
+	private static final int STATUS_UPDATE_DELAY = 60;
+	
 	private static final TimerInterval[] TIMER_INTERVALS = new TimerInterval[] {   
 		        new TimerInterval("1 Minute", 1),
 		        new TimerInterval("5 Minutes", 5),
@@ -33,6 +41,8 @@ public class CustomNotifierActivity extends Activity {
 		        new TimerInterval("4 Hours", 240)};
 
 	private NotifierDAO dao;
+	
+	private ScheduledFuture scheduledFuture = null; 
 	
 	private OnClickListener startListener = new OnClickListener() {
 	    public void onClick(View v) {
@@ -82,11 +92,35 @@ public class CustomNotifierActivity extends Activity {
         stopButton.setOnClickListener(stopListener);
         saveButton.setOnClickListener(saveListener);
         
+        scheduleStatusUpdates();
         
         Log.d(TAG, "Starting...");
 
         //startService(NotifierConstants.START_SCHEDULE, null);
     }
+
+	private void scheduleStatusUpdates() {
+		Log.d(TAG, "scheduleStatusUpdates");
+		if(!(scheduledFuture == null || scheduledFuture.isCancelled() || scheduledFuture.isDone())){
+			Log.d(TAG, "already scheduled");
+			return;
+		}
+		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        scheduledFuture = scheduler.scheduleAtFixedRate(new Runnable(){
+			public void run() {
+				Log.d(TAG, "Updating Status");
+				try {
+					runOnUiThread(new Runnable(){
+						public void run() {
+							updateStatus(null);
+						}
+					});
+				} catch(Exception e){
+					Log.e(TAG, e.getMessage());
+				}
+			}
+        }, 1, STATUS_UPDATE_DELAY, SECONDS);
+	}
 
 	private void updateStatus(String inStatus) {
 		TextView statusView = (TextView)findViewById(R.id.textViewStatus);
@@ -99,6 +133,11 @@ public class CustomNotifierActivity extends Activity {
 			statusView.setText("   " + inStatus);
 		}
 		
+		TextView lastRun = (TextView)findViewById(R.id.textViewUpdateStatus);
+		if(dao != null){
+			String update = dao.findSetting(NotifierDatabaseConstants.LAST_FIRE_ID);
+			lastRun.setText("   " + update);
+		}
 	}
     
 
@@ -167,11 +206,30 @@ public class CustomNotifierActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		cancelStatusUpdates();
 		if(dao != null){
 			dao.close();
 			dao = null;
 		}
 		
+	}
+	
+	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);
+		cancelStatusUpdates();
+		if(hasFocus){
+			updateStatus(null);
+			scheduleStatusUpdates();
+		}
+	}
+
+	private void cancelStatusUpdates() {
+		if(scheduledFuture != null){
+			scheduledFuture.cancel(false);
+			scheduledFuture = null;
+		}
 	}
 	
 	private static class TimerInterval {

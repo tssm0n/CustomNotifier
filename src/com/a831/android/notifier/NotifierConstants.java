@@ -5,6 +5,7 @@ public interface NotifierConstants {
 	public static final String NOTIFICATION_COMMAND = "NOTIFICATION_COMMAND";
 	public static final String NOTIFICATION_ID = "NOTIFICATION_ID";
 	public static final String NOTIFICATION_DATA = "NOTIFICATION_DATA";
+	public static final String NOTIFICATION_TEXT = "NOTIFICATION_TEXT";
 	public static final String URL = "URL";
 	public static final String INTERVAL = "INTERVAL";
 	public static final String PROCESS_ID = "PROCESS_ID";
