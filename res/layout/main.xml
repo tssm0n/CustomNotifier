@@ -41,8 +41,9 @@
             <EditText
                 android:id="@+id/editTextUrl"
                 android:layout_width="match_parent"
-            android:layout_span="2"                
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:inputType="textUri" >
 
                 <requestFocus />
             </EditText>
