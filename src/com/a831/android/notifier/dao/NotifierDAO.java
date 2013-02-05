@@ -1,6 +1,8 @@
 package com.a831.android.notifier.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -124,5 +126,26 @@ public class NotifierDAO {
 	
 	public boolean eventExists(int id){
 		return loadNotifyEvent(id) != null;
+	}
+	
+	public List<NotifyEvent> loadEvents(){
+		List<NotifyEvent> result = new ArrayList<NotifyEvent>();
+		
+		SQLiteDatabase db = helper.getReadableDatabase();
+		
+		Cursor cursor = db.rawQuery("select * from "
+				+ NotifierDatabaseConstants.MESSAGES_TABLE + " ORDER BY "
+				+ NotifierDatabaseConstants.DEFAULT_SORT_ORDER, null);
+		
+		cursor.moveToFirst();
+		while (cursor.moveToNext()) {
+			result.add(new NotifyEvent(cursor.getInt(0), cursor.getString(1),
+					cursor.getString(2), SeverityType.valueOf(cursor
+							.getString(3)), new Date(cursor.getInt(4))));
+		}
+		
+		cursor.close();
+	
+		return result;			
 	}
 }

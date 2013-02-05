@@ -1,5 +1,9 @@
 package com.a831.android.notifier;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +13,8 @@ import android.widget.TextView;
 public class NoticeDetailsActivity extends Activity {
 
 	private static final String TAG = "NoticeDetailsActivity";
+	
+	private static final DateFormat TIME_FORMAT = new SimpleDateFormat("MM/dd hh:mm aa", Locale.US);
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -25,8 +31,9 @@ public class NoticeDetailsActivity extends Activity {
 		TextView tv = (TextView) findViewById(R.id.messageDetails);
 		
 		String text = intent.getStringExtra(NotifierConstants.NOTIFICATION_TEXT);
+		String date = TIME_FORMAT.format(intent.getSerializableExtra(NotifierConstants.NOTIFICATION_TIME));
 
-		tv.setText(text);
+		tv.setText(text + " - " + date);
 		
 		Log.d(TAG, text);
 	}

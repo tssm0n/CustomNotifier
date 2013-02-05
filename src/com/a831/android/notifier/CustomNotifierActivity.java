@@ -224,6 +224,11 @@ public class CustomNotifierActivity extends Activity {
 			scheduleStatusUpdates();
 		}
 	}
+	
+	public void showHistory(View view){
+		Intent intent = new Intent(this, NoticeListActivity.class); 
+		startActivity(intent);
+	}
 
 	private void cancelStatusUpdates() {
 		if(scheduledFuture != null){

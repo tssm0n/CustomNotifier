@@ -1,8 +1,10 @@
 package com.a831.android.notifier.database;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 public class NotifierDatabaseConstants implements BaseColumns{
+	
 	
     public static final String PARAMETERS_TABLE = "PARAMETERS";
     public static final String MESSAGES_TABLE = "MESSAGES";
@@ -20,7 +22,9 @@ public class NotifierDatabaseConstants implements BaseColumns{
 	public static final int INTERVAL_ID = 2;
 	public static final int PROCESS_ID = 3;
 	public static final int LAST_FIRE_ID = 4;
+	public static final String DEFAULT_SORT_ORDER = TIMESTAMP_COLUMN + " desc";
 	
 	public enum Statuses { STOPPED, RUNNING };
 
+	public static final Uri CONTENT_URI = Uri.parse("content://com.a831.android.notifier/" + MESSAGES_TABLE);
 }

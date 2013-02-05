@@ -6,7 +6,9 @@
     <string name="StartButton">Start</string>
     <string name="StopButton">Stop</string>
     <string name="SaveButton">Save Settings</string>
-    
     <string name="interval_prompt">Pick an interval</string>
- 
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_notice_list">NoticeListActivity</string>
+
 </resources>

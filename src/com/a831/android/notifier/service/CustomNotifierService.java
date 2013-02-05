@@ -253,6 +253,7 @@ public class CustomNotifierService extends Service {
 		Intent notificationIntent = new Intent(this, NoticeDetailsActivity.class);
 		notificationIntent.putExtra(NotifierConstants.NOTIFICATION_ID,  notice.getId());
 		notificationIntent.putExtra(NotifierConstants.NOTIFICATION_TEXT,  notice.getBody());
+		notificationIntent.putExtra(NotifierConstants.NOTIFICATION_TIME, notice.getTimestamp());
 		PendingIntent contentIntent = PendingIntent.getActivity(this, notice.getId(), notificationIntent, 0);
 
 		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
