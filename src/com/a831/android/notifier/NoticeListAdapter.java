@@ -47,5 +47,17 @@ public class NoticeListAdapter extends ArrayAdapter<String> {
 		return getEvents().size();
 	}
 
-
+	public boolean refreshEvents(){
+		if(events == null){
+			getEvents();
+			return true;
+		}
+		
+		int newSize = dao.countEvents();
+		if(newSize != events.size()){
+			events = dao.loadEvents();
+			return true;
+		}
+		return false;
+	}
 }

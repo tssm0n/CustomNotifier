@@ -10,6 +10,8 @@ import android.widget.ListView;
 
 public class NoticeListActivity extends Activity {
 
+	private NoticeListAdapter noticeListAdapter;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -17,7 +19,8 @@ public class NoticeListActivity extends Activity {
 		setContentView(R.layout.activity_notice_list);
 		
 		ListView listView = (ListView)findViewById(R.id.noticeListView);
-		listView.setAdapter(new NoticeListAdapter(this, android.R.layout.simple_list_item_1, android.R.id.text1));
+		noticeListAdapter = new NoticeListAdapter(this, android.R.layout.simple_list_item_1, android.R.id.text1);
+		listView.setAdapter(noticeListAdapter);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View v, int arg2,
 					long arg3) {
@@ -27,6 +30,14 @@ public class NoticeListActivity extends Activity {
 				notificationIntent.putExtra(NotifierConstants.NOTIFICATION_TEXT,  event.getBody());
 				notificationIntent.putExtra(NotifierConstants.NOTIFICATION_TIME, event.getTimestamp());
 				startActivity(notificationIntent);
+			}
+		});
+		
+		listView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			public void onFocusChange(View v, boolean hasFocus) {
+				if(hasFocus){
+					noticeListAdapter.refreshEvents();
+				}
 			}
 		});
 	}

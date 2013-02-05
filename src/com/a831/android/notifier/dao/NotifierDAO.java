@@ -148,4 +148,20 @@ public class NotifierDAO {
 	
 		return result;			
 	}
+	
+	public int countEvents(){
+		SQLiteDatabase db = helper.getReadableDatabase();
+		
+		Cursor cursor = db.rawQuery("select count(*) from " + NotifierDatabaseConstants.MESSAGES_TABLE, null);
+		
+		int result = 0;
+		
+		if(cursor.moveToFirst()){
+			result = cursor.getInt(0);
+		}
+		
+		cursor.close();
+	
+		return result;	
+	}
 }
